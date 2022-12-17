@@ -1,7 +1,12 @@
 LitJSON SUPPORTED SET
 =======
-Support set for ListJSON.
+Support set for ListJSON. HashSet, SortedSet and so on.
 
+Add pretty print parame to ToJson.
+
+Add JsonIgnore attribute.
+
+Let property do not serialize if can't write.
 
 LitJSON
 =======
