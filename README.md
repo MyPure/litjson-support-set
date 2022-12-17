@@ -6,7 +6,7 @@ Add pretty print parame to ToJson.
 
 Add JsonIgnore attribute.
 
-Let property do not serialize if can't write.
+Let property do not serialize if it's readonly.
 
 LitJSON
 =======
