@@ -101,8 +101,7 @@ namespace LitJson
     public   delegate TValue ImporterFunc<TJson, TValue> (TJson input);
 
     public delegate IJsonWrapper WrapperFactory ();
-
-
+    
     public class JsonMapper
     {
         #region Fields
@@ -195,7 +194,7 @@ namespace LitJson
             }
             else
             {
-                var iSet = type.GetGenericInterface(typeof(ISet<>));
+                var iSet = GetGenericInterface(type, typeof(ISet<>));
                 if (iSet != null)
                 {
                     data.IsSet = true;
@@ -211,6 +210,21 @@ namespace LitJson
                     return;
                 }
             }
+        }
+        
+        private static Type GetGenericInterface(Type type, Type generic)
+        {
+            Type[] interfaces = type.GetInterfaces();
+            for (int i = 0; i < interfaces.Length; ++i)
+            {
+                Type this_interface = interfaces[i];
+                if (this_interface.IsGenericType && this_interface.GetGenericTypeDefinition() == generic)
+                {
+                    return this_interface;
+                }
+            }
+
+            return null;
         }
 
         private static void AddObjectMetadata (Type type)
@@ -837,7 +851,7 @@ namespace LitJson
                 return;
             }
 
-            if (obj.GetType().HasGenericInterface(typeof(ISet<>)))
+            if (GetGenericInterface(obj.GetType(), typeof(ISet<>)) != null)
             {
                 writer.WriteArrayStart ();
                 foreach (object elem in (IEnumerable) obj)
